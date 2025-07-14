@@ -17,9 +17,6 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[project.urls]
-"Homepage" = "https://github.com/falkben/pre-commit-prepend-jira-issue"
-
 [project.scripts]
 append_jira_issue = "append_jira_issue:main"
 
