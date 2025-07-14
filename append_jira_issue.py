@@ -50,8 +50,8 @@ def get_commit_msg(commit_msg_filepath: str) -> str:
     return msg
 
 
-def prepend_jira_issue(msg: str, issue: str) -> str:
-    return f"{issue}: {msg}"
+def append_jira_issue(msg: str, issue: str) -> str:
+    return f"{msg} - {issue}"
 
 
 def write_commit_msg(commit_msg_filepath: str, commit_msg: str) -> None:
@@ -84,7 +84,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if commit_msg_jira_issue:
         return 0
 
-    new_commit_msg = prepend_jira_issue(commit_msg, branch_jira_issue)
+    new_commit_msg = append_jira_issue(commit_msg, branch_jira_issue)
 
     write_commit_msg(args.commit_msg_filepath, new_commit_msg)
 
