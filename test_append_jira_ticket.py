@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-import prepend_jira_issue
+import append_jira_issue
 
 LONG_COMMIT_MSG = """\
 spanning many lines
@@ -69,21 +69,21 @@ def create_commit_msg_file(tmp_path: Path):
     ),
 )
 def test_extract_jira_issue(content, expected):
-    output = prepend_jira_issue.extract_jira_issue(content)
+    output = append_jira_issue.extract_jira_issue(content)
     assert output == expected
 
 
 def test_get_commit_msg_long(create_commit_msg_file):
     long_commit_msg_file = create_commit_msg_file(LONG_COMMIT_MSG)
 
-    msg = prepend_jira_issue.get_commit_msg(long_commit_msg_file)
+    msg = append_jira_issue.get_commit_msg(long_commit_msg_file)
     assert msg == LONG_COMMIT_MSG
 
 
 def test_get_commit_msg_short(create_commit_msg_file):
     short_commit_msg_file = create_commit_msg_file(SHORT_COMMIT_MSG)
 
-    msg = prepend_jira_issue.get_commit_msg(short_commit_msg_file)
+    msg = append_jira_issue.get_commit_msg(short_commit_msg_file)
     assert msg == SHORT_COMMIT_MSG
 
 
@@ -96,19 +96,19 @@ This is the commit message
 Not the stuff below
 """
 
-    msg = prepend_jira_issue.get_commit_msg(commented_commit_msg_file)
+    msg = append_jira_issue.get_commit_msg(commented_commit_msg_file)
     assert msg == expected_msg
 
 
-def test_prepend_jira_issue_short_msg():
+def test_append_jira_issue_short_msg():
     issue = "some_issue"
-    new_msg = prepend_jira_issue.prepend_jira_issue(SHORT_COMMIT_MSG, issue)
+    new_msg = append_jira_issue.append_jira_issue(SHORT_COMMIT_MSG, issue)
 
     assert new_msg == f"some_issue: {SHORT_COMMIT_MSG}"
 
 
-def test_prepend_jira_issue_long_msg():
+def test_append_jira_issue_long_msg():
     issue = "some_issue"
-    new_msg = prepend_jira_issue.prepend_jira_issue(LONG_COMMIT_MSG, issue)
+    new_msg = append_jira_issue.append_jira_issue(LONG_COMMIT_MSG, issue)
 
     assert new_msg == f"some_issue: {LONG_COMMIT_MSG}"
